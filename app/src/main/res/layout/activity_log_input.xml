@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="end|top">
+
+    <!--@todo: all of the margin values are hard coded, probably want to fix that -->
+    <!--@todo: mess with fonts, font size, color, etc. -->
+    <!--@todo: text box style (vs. line input) -->
+    <!--@todo: figure out @string resource -->
+    <!--@todo: seek bar can't be placed below text?  figure out why -->
+    <!--@todo: learn more about relative vs. linear layouts - there's something there you don't understand yet (probably related to last todo) -->
+    <!--@todo: figure out why marginLeft isn't doing anything for slidingScaleText (probably also related) -->
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:id="@+id/statusLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:id="@+id/slidingScaleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:layout_marginLeft="500dp"
+                tools:layout_marginTop="50dp"
+                android:layout_gravity="start|top"
+                android:text="How is Brain?" />
+
+            <SeekBar
+                android:id="@+id/slidingScaleObject"
+                android:layout_width="304dp"
+                android:layout_height="19dp"
+                android:layout_gravity="start|bottom"
+                tools:layout_marginLeft="50dp"
+                tools:layout_marginTop="50dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/wordsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/statusLayout"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:id="@+id/wordsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Words: "
+                tools:layout_marginLeft="10dp" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="309dp"
+                android:layout_height="145dp"
+                android:ems="10"
+                android:inputType="text"
+                tools:layout_marginTop="50dp" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/wordsLayout"
+            android:text="Submit"
+            tools:layout_marginLeft="39dp"
+            tools:layout_marginTop="250dp" />
+
+
+        <!--
+
+
+
+
+
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_input_add"
+            tools:layout_marginLeft="39dp"
+            tools:layout_marginTop="400dp" />
+
+
+
+              !-->
+    </RelativeLayout>
+
+
+</LinearLayout>
