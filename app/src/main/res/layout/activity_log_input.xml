@@ -12,7 +12,7 @@
     <!--@todo: seek bar can't be placed below text?  figure out why -->
     <!--@todo: learn more about relative vs. linear layouts - there's something there you don't understand yet (probably related to last todo) -->
     <!--@todo: figure out why marginLeft isn't doing anything for slidingScaleText (probably also related) -->
-
+    <!--@todo: Want a constant sized box and scroll bar in edittext.  This probably means a hard coded height?  -->
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -23,7 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/slidingScaleText"
@@ -39,6 +40,7 @@
                 android:layout_width="304dp"
                 android:layout_height="19dp"
                 android:layout_gravity="start|bottom"
+                android:min="0"
                 tools:layout_marginLeft="50dp"
                 tools:layout_marginTop="50dp" />
 
@@ -48,6 +50,7 @@
             android:id="@+id/wordsLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:layout_below="@+id/statusLayout"
             android:layout_marginTop="10dp"
             >
@@ -60,21 +63,23 @@
                 tools:layout_marginLeft="10dp" />
 
             <EditText
-                android:id="@+id/editText"
-                android:layout_width="309dp"
-                android:layout_height="145dp"
+                android:id="@+id/log_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textDirection="firstStrongLtr"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 tools:layout_marginTop="50dp" />
 
         </LinearLayout>
 
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/log_submit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/wordsLayout"
+            android:layout_weight=".3"
             android:text="Submit"
             tools:layout_marginLeft="39dp"
             tools:layout_marginTop="250dp" />
