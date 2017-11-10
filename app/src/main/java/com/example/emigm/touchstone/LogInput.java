@@ -59,7 +59,7 @@ public class LogInput extends AppCompatActivity {
                 log += (((EditText)findViewById(R.id.log_text)).getText());
                 log += "\n</entry>\n\n\n";
 
-                String filename = "TouchstoneLog";
+                String filename = getString(R.string.logfile_name);
                 FileOutputStream outputStream;
 
                 try {
