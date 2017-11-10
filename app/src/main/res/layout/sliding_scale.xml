@@ -4,6 +4,11 @@
     android:background="#09C"
     android:padding="@dimen/widget_margin">
 
+
+
+
+
+
     <TextView
         android:id="@+id/appwidget_text"
         android:layout_width="wrap_content"
