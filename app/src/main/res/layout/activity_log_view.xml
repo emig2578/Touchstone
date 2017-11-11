@@ -6,4 +6,28 @@
     android:layout_height="match_parent"
     tools:context="com.example.emigm.touchstone.LogView">
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <RelativeLayout
+            android:id="@+id/logView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:id="@+id/logViewText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                />
+
+        </RelativeLayout>
+
+    </ScrollView>
+<!-- TODO: make it so scroll bar doesn't fill whole screen and can get to bottom of text -->
 </android.support.constraint.ConstraintLayout>

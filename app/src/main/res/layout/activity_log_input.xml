@@ -51,8 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/statusLayout"
-            android:layout_marginTop="10dp"
-            >
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:id="@+id/wordsText"
@@ -62,7 +61,7 @@
                 tools:layout_marginLeft="10dp" />
 
             <EditText
-                android:id="@+id/log_text"
+                android:id="@+id/logEntryText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textDirection="firstStrongLtr"
@@ -83,6 +82,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/submit" />
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/stupid_button"
+                android:text="View Log"/>
 
         </LinearLayout>
         <!--

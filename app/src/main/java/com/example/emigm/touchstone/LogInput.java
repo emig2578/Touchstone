@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import java.io.FileOutputStream;
+import android.content.Intent;
 
 public class LogInput extends AppCompatActivity {
 
@@ -22,7 +23,16 @@ public class LogInput extends AppCompatActivity {
         final Button log_submit_button = (Button)findViewById(R.id.log_submit_button);
         log_submit_button.setEnabled(false);
 
-        final EditText log_text = (EditText)findViewById(R.id.log_text);
+        final Button stupid_button = (Button)findViewById(R.id.stupid_button);
+
+        stupid_button.setOnClickListener(new View.OnClickListener(){
+           public void onClick(View v) {
+               Intent stupid_intent = new Intent(LogInput.this, LogView.class);
+               startActivity(stupid_intent);
+           }
+        });
+
+        final EditText log_text = (EditText)findViewById(R.id.logEntryText);
         log_text.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int before, int after) {}
@@ -56,7 +66,7 @@ public class LogInput extends AppCompatActivity {
                 log += "<entry\n";
                 log += "\t time="+timestamp+"\n";
                 log += "\t level="+level+">\n\t";
-                log += (((EditText)findViewById(R.id.log_text)).getText());
+                log += (((EditText)findViewById(R.id.logEntryText)).getText());
                 log += "\n</entry>\n\n\n";
 
                 String filename = getString(R.string.logfile_name);
