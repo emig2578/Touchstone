@@ -14,9 +14,7 @@ public class LogView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_view);
 
-        // Configure Scroll bar
-
-        // TODO: scroll bar
+        // TODO: prettier formatting
 
         // Open file
         FileInputStream logfile;
@@ -27,10 +25,13 @@ public class LogView extends AppCompatActivity {
             // Read from file
             logfile = openFileInput(getString(R.string.logfile_name));
 
-           while (logfile.read(buffer) > 0) {
-               // TODO: make sure this is the right charset to use
-               logViewText.append(new String(buffer, "US-ASCII"));
-           }
+            while (logfile.read(buffer) > 0) {
+                // TODO: make sure this is the right charset to use
+                logViewText.append(new String(buffer, "US-ASCII"));
+
+                // TODO: Coming from C, this seems very very wrong.  Given garbage collection is this really the best way?  Does java have memset?
+                buffer = new byte[256];
+            }
 
            System.out.println("Log successfully read :)");
 
