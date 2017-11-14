@@ -61,7 +61,8 @@ public class LogInput extends AppCompatActivity {
                 int level = ((SeekBar)findViewById(R.id.slidingScaleObject)).getProgress();
 
 
-                // TODO: make creation / reading of xml generic.  a library probably exists
+                // TODO: use DOM
+                // TODO: add object tag to message
                 // Write to file
                 log += "<entry\n";
                 log += "\t time="+timestamp+"\n";
