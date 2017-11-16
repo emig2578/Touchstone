@@ -14,7 +14,8 @@ import android.graphics.Paint;
 public class SlidingScale extends AppWidgetProvider {
 
     private void init() {
-        //mBarPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        Paint mBarPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+       // mBarPaint.
     }
 
 

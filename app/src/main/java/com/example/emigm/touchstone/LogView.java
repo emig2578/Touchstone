@@ -3,10 +3,13 @@ package com.example.emigm.touchstone;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import java.io.FileInputStream;
-
 import android.widget.TextView;
+import java.util.Date;
+import android.util.AttributeSet;
 
 public class LogView extends AppCompatActivity {
+
+    private int x_offset = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +22,7 @@ public class LogView extends AppCompatActivity {
         // Open file
         FileInputStream logfile;
         byte[] buffer = new byte[256];
-        TextView logViewText = (TextView)findViewById(R.id.logViewText);
-        String test_text;
+        String test_text = "";
 
         try {
             // Read from file
@@ -28,7 +30,7 @@ public class LogView extends AppCompatActivity {
 
             while (logfile.read(buffer) > 0) {
                 // TODO: make sure this is the right charset to use
-                logViewText.append(new String(buffer, "US-ASCII"));
+                test_text += (new String(buffer, "US-ASCII"));
 
                 // TODO: Coming from C, this seems very very wrong.  Given garbage collection is this really the best way?  Does java have memset?
                 buffer = new byte[256];
@@ -41,8 +43,6 @@ public class LogView extends AppCompatActivity {
             e.printStackTrace();
             System.out.println("Failed to read log :(");
         }
-
-        test_text = logViewText.getText().toString();
 
         format_entries(test_text);
     }
@@ -74,16 +74,38 @@ public class LogView extends AppCompatActivity {
             level = (attributes_buffer[0].split("level=")[1]);
             level = level.split(">")[0];
 
-            draw_entry(Long.valueOf(timestamp), Integer.valueOf(level), attributes_buffer[1]);
+            draw_entry(Long.valueOf(timestamp), Integer.valueOf(level), attributes_buffer[1], x_offset);
         }
     }
 
-    private void draw_entry(long timestamp, int level, String text) {
+
+    // Draws a log entry on the view page, returns height of text box
+    private int draw_entry(long timestamp, int level, String text, int offset) {
+
+        TextView t = new TextView(LogView.this);
 
         System.out.println("timestamp = "+timestamp);
         System.out.println("level = "+level);
         System.out.println("words = "+text);
 
+        Date date = new Date(timestamp);
+
+        System.out.println("Date = "+date.toString());
+        System.out.println("\n");
+
+        t.setText("\n\n"+date.toString()+"\n\n"+text+"\n");
+
+        t.setBackgroundColor(level*(getResources().getColor(R.color.colorAccent))/100);
+        t.setTextColor(getResources().getColor(R.color.colorAccentDark));
+
+        //TODO: replace this with colored text boxes
+        TextView logViewText = (TextView)findViewById(R.id.logViewText);
+        logViewText.append(t.getText());
+
+        // TODO: figure out how to draw within scrollview
+            // - Draw at x value "offset"
+
+        return t.getHeight();
     }
 
 
