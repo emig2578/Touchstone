@@ -48,9 +48,8 @@ public class LogView extends AppCompatActivity {
     }
 
     private void format_entries(String raw_xml) {
-        long timestamp;
-        int level;
-        String text;
+        String timestamp;
+        String level;
         String entry_buffer[];
         String attributes_buffer[];
 
@@ -69,17 +68,23 @@ public class LogView extends AppCompatActivity {
                 return;
             }
 
-            System.out.println("attributes: " + attributes_buffer[0]);
-            System.out.println("words: " + attributes_buffer[1]);
+            timestamp = (attributes_buffer[0].split("time=")[1]);
+            timestamp = timestamp.split("\n")[0];
 
-            // System.out.println(attributes_buffer[1]);
-            //timestamp = attributes_buffer.
+            level = (attributes_buffer[0].split("level=")[1]);
+            level = level.split(">")[0];
 
-           // System.out.println(entry_buffer[i]);
+            draw_entry(Long.valueOf(timestamp), Integer.valueOf(level), attributes_buffer[1]);
         }
     }
 
     private void draw_entry(long timestamp, int level, String text) {
 
+        System.out.println("timestamp = "+timestamp);
+        System.out.println("level = "+level);
+        System.out.println("words = "+text);
+
     }
+
+
 }
