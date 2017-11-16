@@ -41,8 +41,16 @@ public class LogInput extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int count, int after) {
 
                 // TODO: is there a better way to keep track of this (so we don't call length() every time the text changes)?
-                if (s.length() > 0) log_submit_button.setEnabled(true);
-                else log_submit_button.setEnabled(false);
+                if (s.length() > 0) {
+
+                    // TODO: figure out how to do the color change automatically - could override this function, but there's probably a button parameter
+                    log_submit_button.setEnabled(true);
+                    log_submit_button.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                }
+                else {
+                    log_submit_button.setEnabled(false);
+                    log_submit_button.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
             }
 
             @Override

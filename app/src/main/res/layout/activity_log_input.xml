@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:gravity="end|top">
 
-    <!--@todo: all of the margin values are hard coded, probably want to fix that -->
+    <!--@todo: all of the margin values are hard coded, probably want to fix that.  Same with text box height -->
     <!--@todo: mess with fonts, font size, color, etc. -->
     <!--@todo: text box style (vs. line input) -->
     <!--@todo: figure out @string resource -->
@@ -16,15 +16,16 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp">
 
         <LinearLayout
             android:id="@+id/statusLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp">
+            android:layout_alignParentStart="true">
 
             <TextView
                 android:id="@+id/slidingScaleText"
@@ -49,7 +50,7 @@
         <LinearLayout
             android:id="@+id/wordsLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_below="@id/statusLayout"
             android:layout_marginTop="10dp">
 
@@ -60,14 +61,29 @@
                 android:text="@string/words"
                 tools:layout_marginLeft="10dp" />
 
-            <EditText
-                android:id="@+id/logEntryText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textDirection="firstStrongLtr"
-                android:ems="10"
-                android:inputType="textMultiLine"
-                tools:layout_marginTop="50dp" />
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/colorPrimaryDark"
+                android:layout_marginLeft="10dp"
+                >
+                <ScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@color/colorPrimaryLight"
+                    android:layout_margin="3dp"
+                    >
+                    <EditText
+                        android:id="@+id/logEntryText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textDirection="firstStrongLtr"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:ems="10"
+                        android:inputType="textMultiLine"
+                        tools:layout_marginTop="50dp" />
+                </ScrollView>
+            </FrameLayout>
 
         </LinearLayout>
 
@@ -81,14 +97,16 @@
                 android:id="@+id/log_submit_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/submit" />
+                android:text="@string/submit"
+                android:textColor="@color/colorPrimary" />
 
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/stupid_button"
-                android:text="View Log"/>
+                android:text="View Log"
+                android:textColor="@color/colorPrimaryDark"/>
 
         </LinearLayout>
         <!--

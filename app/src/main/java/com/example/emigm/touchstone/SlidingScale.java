@@ -19,7 +19,6 @@ public class SlidingScale extends AppWidgetProvider {
     }
 
 
-
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
