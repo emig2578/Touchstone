@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:initialKeyguardLayout="@layout/sliding_scale"
-    android:initialLayout="@layout/sliding_scale"
+    android:initialKeyguardLayout="@layout/log_entry"
+    android:initialLayout="@layout/log_entry"
     android:minHeight="40dp"
     android:minWidth="40dp"
     android:previewImage="@drawable/example_appwidget_preview"

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import java.io.FileInputStream;
 import android.widget.TextView;
 import java.util.Date;
-import android.util.AttributeSet;
 
 public class LogView extends AppCompatActivity {
 
@@ -93,14 +92,18 @@ public class LogView extends AppCompatActivity {
         System.out.println("Date = "+date.toString());
         System.out.println("\n");
 
-        t.setText("\n\n"+date.toString()+"\n\n"+text+"\n");
+        t.setText("\n"+date.toString()+"\n\n"+level+"\n\n"+text+"\n");
 
         t.setBackgroundColor(level*(getResources().getColor(R.color.colorAccent))/100);
         t.setTextColor(getResources().getColor(R.color.colorAccentDark));
 
         //TODO: replace this with colored text boxes
+        CharSequence buffer;
         TextView logViewText = (TextView)findViewById(R.id.logViewText);
-        logViewText.append(t.getText());
+        buffer = logViewText.getText();
+        logViewText.setText(t.getText());
+        logViewText.append(getResources().getString(R.string.line_break));
+        logViewText.append(buffer);
 
         // TODO: figure out how to draw within scrollview
             // - Draw at x value "offset"

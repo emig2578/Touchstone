@@ -1,11 +1,8 @@
 <resources>
-    <declare-styleable name="SlidingScale">
-        <attr name="showLabel" format="boolean" />
-        <attr name="barShape" format="enum">
-            <enum name="square" value="0"/>
-            <enum name="oval" value="1"/>
-        </attr>
-        <attr name="barColor" format="color" />
-        <attr name="startingPosition" format="fraction" />
+    <declare-styleable name="LogEntry">
+        <attr name="Year" format="integer" />
+        <attr name="Month" format="string" />
+        <attr name="Day" format="integer" />
+        <attr name="Level" format="color" />
     </declare-styleable>
 </resources>

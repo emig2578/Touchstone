@@ -64,14 +64,14 @@
             <FrameLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/colorPrimary"
                 android:layout_marginLeft="10dp"
                 >
                 <ScrollView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:background="@color/colorPrimaryLight"
-                    android:layout_margin="3dp"
+                    android:layout_margin="2dp"
                     >
                     <EditText
                         android:id="@+id/logEntryText"

@@ -22,16 +22,6 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
 
-        <receiver android:name=".SlidingScale">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/sliding_scale_info" />
-        </receiver>
-
         <activity android:name=".LogView"></activity>
     </application>
 

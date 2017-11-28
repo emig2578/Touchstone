@@ -31,10 +31,7 @@
     <!-- Optional label for scale -->
 
     <!-- Attributes:
-            - Color
-            - Bar shape
-            - Tracker shape
-            - Tracker position
+
     -->
 
 </RelativeLayout>

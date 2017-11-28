@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import java.io.FileOutputStream;
 import android.content.Intent;
+import org.xml.sax.*;
 
 public class LogInput extends AppCompatActivity {
 
