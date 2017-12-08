@@ -3,17 +3,16 @@ package com.example.emigm.touchstone;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.SeekBar;
 import java.io.FileOutputStream;
-import android.content.Intent;
-import org.xml.sax.*;
+import android.widget.LinearLayout;
+import java.util.Iterator;
 
 public class LogInput extends AppCompatActivity {
+
+    // TEMPORARY: solution until I figure out how I want to build, maintain and consume the queue
+    TS_Form current_form = build_hardcode_anxiety_form();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,42 +20,24 @@ public class LogInput extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_input);
 
-        final Button log_submit_button = (Button)findViewById(R.id.log_submit_button);
+        final Button log_submit_button = (Button)findViewById(R.id.submit_form);
         log_submit_button.setEnabled(false);
 
-        final Button stupid_button = (Button)findViewById(R.id.stupid_button);
+        final Button log_dismiss_button = (Button)findViewById(R.id.dismiss_form);
 
-        stupid_button.setOnClickListener(new View.OnClickListener(){
-           public void onClick(View v) {
-               Intent stupid_intent = new Intent(LogInput.this, LogView.class);
-               startActivity(stupid_intent);
-           }
-        });
+        LinearLayout form_content = (LinearLayout)findViewById(R.id.form_content);
 
-        final EditText log_text = (EditText)findViewById(R.id.logEntryText);
-        log_text.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int before, int after) {}
+        Iterator<TS_Widget> witerator = current_form.widgetIterator();
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int count, int after) {
+        while (witerator.hasNext()) {
+            TS_Widget w = witerator.next();
 
-                // TODO: is there a better way to keep track of this (so we don't call length() every time the text changes)?
-                if (s.length() > 0) {
+            form_content.addView(w.getAndroidView());
+        }
 
-                    // TODO: figure out how to do the color change automatically - could override this function, but there's probably a button parameter
-                    log_submit_button.setEnabled(true);
-                    log_submit_button.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                }
-                else {
-                    log_submit_button.setEnabled(false);
-                    log_submit_button.setTextColor(getResources().getColor(R.color.colorPrimary));
-                }
-            }
+        // TODO: inflate everything
 
-            @Override
-            public void afterTextChanged(Editable editable) {}
-        });
+        // TODO: set up event listener for form ready / not ready events
 
         log_submit_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -65,33 +46,19 @@ public class LogInput extends AppCompatActivity {
                 String log = "";
                 long timestamp = System.currentTimeMillis();
 
-                // get level
-                // TODO: plumb this in once sliding scale is ready
-                int level = ((SeekBar)findViewById(R.id.slidingScaleObject)).getProgress();
-
-
-                // TODO: use DOM
-                // TODO: add object tag to message
-                // Write to file
-                log += "<entry\n";
-                log += "\t time="+timestamp+"\n";
-                log += "\t level="+level+">\n\t";
-                log += (((EditText)findViewById(R.id.logEntryText)).getText());
-                log += "\n</entry>\n\n\n";
-
                 String filename = getString(R.string.logfile_name);
                 FileOutputStream outputStream;
 
                 try {
                     // Write content to file
                     outputStream = openFileOutput(filename, Context.MODE_APPEND);
-                    outputStream.write(log.getBytes());
+
+                    outputStream.write(current_form.toEntry().getBytes());
+
                     System.out.println("Log successfully written :)");
 
-                    // Clean up text box
-                    log_text.setEnabled(false);
-                    log_text.setText("");
-                    log_text.setEnabled(true);
+                    // Clean up form
+                    current_form.clearEntryData();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -99,6 +66,24 @@ public class LogInput extends AppCompatActivity {
                 }
             }
         });
+
+        log_dismiss_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // TODO: pop up - are you sure you want to dismiss this form?
+            }
+        });
+    }
+
+    // TEMPORARY: for messing around with form structure before custom forms enabled
+    private TS_Form build_hardcode_anxiety_form() {
+
+        // Create widgets
+
+        // Create recurrence info
+
+        // Create form
+        return new TS_Form("Anxiety", null, "");
+
     }
 }
 

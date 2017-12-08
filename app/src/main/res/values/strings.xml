@@ -78,7 +78,11 @@
 
     <string name="logfile_name">TouchstoneLog</string>
     <string name="submit">Ship it!</string>
+    <string name="dismiss">Kill it!</string>
+    <string name="dismiss_prompt">Are you sure you want to dismiss this form?</string>
     <string name="scale_label">How are you?</string>
     <string name="words">Words: </string>
     <string name="line_break">\n----------------------------------\n</string>
+    <string name="view_log">View Log</string>
+    <string name="input_data">Input Data</string>
 </resources>

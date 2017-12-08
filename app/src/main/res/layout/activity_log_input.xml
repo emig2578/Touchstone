@@ -1,133 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="end|top">
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.emigm.touchstone.LogView">
 
-    <!--@todo: all of the margin values are hard coded, probably want to fix that.  Same with text box height -->
-    <!--@todo: mess with fonts, font size, color, etc. -->
-    <!--@todo: text box style (vs. line input) -->
-    <!--@todo: figure out @string resource -->
-    <!--@todo: seek bar can't be placed below text?  figure out why -->
-    <!--@todo: learn more about relative vs. linear layouts - there's something there you don't understand yet (probably related to last todo) -->
-    <!--@todo: figure out why marginLeft isn't doing anything for slidingScaleText (probably also related) -->
-    <!--@todo: Want a constant sized box and scroll bar in edittext.  This probably means a hard coded height?  -->
+<!--@todo: all of the margin values are hard coded, probably want to fix that.  Same with text box height -->
+<!--@todo: mess with fonts, font size, color, etc. -->
+<!--@todo: text box style (vs. line input) -->
+<!--@todo: figure out @string resource -->
+<!--@todo: seek bar can't be placed below text?  figure out why -->
+<!--@todo: learn more about relative vs. linear layouts - there's something there you don't understand yet (probably related to last todo) -->
+<!--@todo: figure out why marginLeft isn't doing anything for slidingScaleText (probably also related) -->
+<!--@todo: Want a constant sized box and scroll bar in edittext.  This probably means a hard coded height?  -->
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp">
 
-        <LinearLayout
-            android:id="@+id/statusLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true">
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="end|top">
 
-            <TextView
-                android:id="@+id/slidingScaleText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:layout_marginLeft="0dp"
-                tools:layout_marginTop="0dp"
-                android:layout_gravity="start|top"
-                android:text="@string/scale_label" />
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp">
 
-            <SeekBar
-                android:id="@+id/slidingScaleObject"
+            <RelativeLayout
+                android:id="@+id/form_body"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                tools:layout_marginLeft="0dp"
-                tools:layout_marginRight="0dp"
-                tools:layout_marginTop="0dp" />
+                android:layout_height="wrap_content">
 
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/form_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/wordsLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_below="@id/statusLayout"
-            android:layout_marginTop="10dp">
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/wordsText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/words"
-                tools:layout_marginLeft="10dp" />
+                <Button
+                    android:id="@+id/submit_form"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/form_content"
+                    android:text="@string/submit"
+                    />
 
-            <FrameLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="@color/colorPrimary"
-                android:layout_marginLeft="10dp"
-                >
-                <ScrollView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:background="@color/colorPrimaryLight"
-                    android:layout_margin="2dp"
-                    >
-                    <EditText
-                        android:id="@+id/logEntryText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textDirection="firstStrongLtr"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:ems="10"
-                        android:inputType="textMultiLine"
-                        tools:layout_marginTop="50dp" />
-                </ScrollView>
-            </FrameLayout>
+                <Button
+                    android:id="@+id/dismiss_form"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@id/submit_form"
+                    android:text="@string/dismiss"/>
 
-        </LinearLayout>
+            </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/wordsLayout">
+        </ScrollView>
+    </FrameLayout>
 
-            <Button
-                android:id="@+id/log_submit_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/submit"
-                android:textColor="@color/colorPrimary" />
-
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/stupid_button"
-                android:text="View Log"
-                android:textColor="@color/colorPrimaryDark"/>
-
-        </LinearLayout>
-        <!--
-
-
-
-
-
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_input_add"
-            tools:layout_marginLeft="39dp"
-            tools:layout_marginTop="400dp" />
-
-
-
-              !-->
-    </RelativeLayout>
-
-
-</LinearLayout>
+<!--
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:menu="@menu/nav_menu" />
+-->
+</android.support.v4.widget.DrawerLayout>
