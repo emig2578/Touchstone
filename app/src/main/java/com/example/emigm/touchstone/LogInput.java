@@ -12,13 +12,15 @@ import java.util.Iterator;
 public class LogInput extends AppCompatActivity {
 
     // TEMPORARY: solution until I figure out how I want to build, maintain and consume the queue
-    TS_Form current_form = build_hardcode_anxiety_form();
+    TS_Form current_form;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_input);
+
+        current_form = build_hardcode_anxiety_form();
 
         final Button log_submit_button = (Button)findViewById(R.id.submit_form);
         log_submit_button.setEnabled(false);
@@ -35,9 +37,8 @@ public class LogInput extends AppCompatActivity {
             form_content.addView(w.getAndroidView());
         }
 
-        // TODO: inflate everything
-
         // TODO: set up event listener for form ready / not ready events
+            // Note: in android terminology, we want an "intent filter"
 
         log_submit_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -77,13 +78,12 @@ public class LogInput extends AppCompatActivity {
     // TEMPORARY: for messing around with form structure before custom forms enabled
     private TS_Form build_hardcode_anxiety_form() {
 
-        // Create widgets
+        // Create widget text
 
         // Create recurrence info
 
         // Create form
-        return new TS_Form("Anxiety", null, "");
-
+        return new TS_Form("Anxiety", null, "", this.getApplicationContext());
     }
 }
 
@@ -115,24 +115,14 @@ public class LogInput extends AppCompatActivity {
         - Theme color
         - Notification sound
 
-   TODO: Events
-        - Pop up?
-        - Text cap characters
-        - Color
-        - Date / time
-        - Submit
-            - Package into XML + write to file
-
    TODO: Home page
         - View log
         - Settings
-        - Add a known event
         - ???
 
    TODO: Log viewer
         - Graph over time
         - Zoom in / out
-        - Event display
 
 
 

@@ -1,6 +1,7 @@
 package com.example.emigm.touchstone;
 import android.app.AlarmManager;
 import java.util.Iterator;
+import android.content.Context;
 
 public class TS_Form {
 
@@ -22,11 +23,16 @@ public class TS_Form {
     }
 
     // TODO: is String the way we do this?  Does DOM have a better way of passing this data around?
-    public TS_Form(String name, TS_Recurrence_Info recurrence, String entry_fields_xml) {
+    public TS_Form(String name, TS_Recurrence_Info recurrence, String entry_fields_xml, Context context) {
 
         setName(name);
         setRecurrence(recurrence);
 
+        // Process xml - fail if no widgets / widgets not built properly
+
+
+        // TEMPORARY: hard code anxiety form list
+        Entry_Fields = new TS_Widget[]{new TS_Text_Widget("Words", context)};
 
 
         // Update widgets ready mask
@@ -35,12 +41,7 @@ public class TS_Form {
             if (Entry_Fields[i].isRequired()) {
                 notifyReady(i, false);
             }
-
         }
-
-        // Process xml
-        // TEMPORARY: hard code anxiety form list
-
 
     }
 
@@ -104,6 +105,7 @@ public class TS_Form {
         if (Widgets_Ready == 0) {
 
             // Broadcast widgets ready event - LogInput listens and updates accordingly
+            // note: in android terminology we want to "broadcast" an "intent"
             return true;
         }
         else if (was_ready) {
