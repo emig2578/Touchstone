@@ -4,6 +4,8 @@ import android.view.View;
 
 public interface TS_Widget {
 
+    public static final String ACTION_WIDGET_READY = "com.example.emigm.touchstone.WIDGET_READY";
+
     String label = "";
     boolean required = false;
     int index = 0;

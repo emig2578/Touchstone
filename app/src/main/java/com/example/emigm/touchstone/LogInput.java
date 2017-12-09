@@ -1,6 +1,8 @@
 package com.example.emigm.touchstone;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.Button;
 import java.io.FileOutputStream;
 import android.widget.LinearLayout;
 import java.util.Iterator;
+import android.content.IntentFilter;
 
 public class LogInput extends AppCompatActivity {
 
@@ -37,8 +40,22 @@ public class LogInput extends AppCompatActivity {
             form_content.addView(w.getAndroidView());
         }
 
-        // TODO: set up event listener for form ready / not ready events
-            // Note: in android terminology, we want an "intent filter"
+        IntentFilter filter = new IntentFilter("ACTION_FORM_READY");
+        this.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                boolean ready = intent.getBooleanExtra("ready", false);
+
+                if (ready) {
+                    log_submit_button.setEnabled(true);
+                }
+
+                else {
+                    log_submit_button.setEnabled(false);
+                }
+            }
+        }, filter);
 
         log_submit_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -84,6 +101,10 @@ public class LogInput extends AppCompatActivity {
 
         // Create form
         return new TS_Form("Anxiety", null, "", this.getApplicationContext());
+    }
+
+    private void form_ready_callback() {
+
     }
 }
 

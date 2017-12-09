@@ -2,14 +2,20 @@ package com.example.emigm.touchstone;
 import android.app.AlarmManager;
 import java.util.Iterator;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.BroadcastReceiver;
 
 public class TS_Form {
+
+    public static final String ACTION_FORM_READY = "com.example.emigm.touchstone.ACTION_FORM_READY";
 
     public int MAX_WIDGETS_PER_FORM = 32;
 
     private String Name;
     private TS_Recurrence_Info Recurrence;
     private TS_Widget[] Entry_Fields;
+    private Context m_context;
 
     private int Widgets_Ready = 0;
 
@@ -29,7 +35,7 @@ public class TS_Form {
         setRecurrence(recurrence);
 
         // Process xml - fail if no widgets / widgets not built properly
-
+        m_context = context;
 
         // TEMPORARY: hard code anxiety form list
         Entry_Fields = new TS_Widget[]{new TS_Text_Widget("Words", context)};
@@ -43,6 +49,18 @@ public class TS_Form {
             }
         }
 
+        IntentFilter filter = new IntentFilter("ACTION_WIDGET_READY");
+        m_context.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int id = intent.getIntExtra("id", -1);
+                boolean ready = intent.getBooleanExtra("ready", false);
+
+                if (id >= 0 && id < Entry_Fields.length) {
+                    notifyReady(id, ready);
+                }
+            }
+        }, filter);
     }
 
     // Get the friendly name of this form
@@ -85,10 +103,9 @@ public class TS_Form {
         for (int i = 0; i < Entry_Fields.length; i++) {
             Entry_Fields[i].clearData();
         }
-
     }
 
-    // Used by widgets to notify when they are ready to be submitted.  Returns true if all widgets in form are ready
+    // Callback for broadcast from widgets to notify when they are ready to be submitted.  Returns true if all widgets in form are ready
     public boolean notifyReady(int id, boolean ready) {
 
         boolean was_ready = (Widgets_Ready == 0);
@@ -103,15 +120,14 @@ public class TS_Form {
 
         // all widgets are ready
         if (Widgets_Ready == 0) {
-
-            // Broadcast widgets ready event - LogInput listens and updates accordingly
-            // note: in android terminology we want to "broadcast" an "intent"
+            sendFormReadyNotification(true);
             return true;
         }
-        else if (was_ready) {
 
-            // Broadcast widgets not ready event - LogInput listens and updates accordingly
+        else if (was_ready) {
+            sendFormReadyNotification(false);
         }
+
         return false;
     }
 
@@ -136,6 +152,16 @@ public class TS_Form {
                 return Entry_Fields[index++];
             }
         };
+    }
+
+    private void sendFormReadyNotification(boolean ready) {
+
+        // Broadcast WIDGET_READY broadcast w/ ready as data
+        Intent i = new Intent(ACTION_FORM_READY);
+        i.putExtra("ready", ready);
+
+        m_context.sendBroadcast(i);
+
     }
 
     public class TS_Recurrence_Info {

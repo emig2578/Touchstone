@@ -5,36 +5,45 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.content.Context;
+import android.content.Intent;
+import android.content.BroadcastReceiver;
 
 public class TS_Text_Widget implements TS_Widget {
 
-    String label = "";
-    int index = 0;
+    private String label = "";
+    private int index = 0;
 
-    EditText data;
+    private EditText data;
+
+    private boolean hasData;
+
+    private Context m_context;
 
     public TS_Text_Widget(String label, Context context) {
+
+        this.label = label;
+
+        m_context = context;
+
         // create data field
         data = new EditText(context);
 
-        final EditText log_text = (EditText)findViewById(R.id.logEntryText);
-        log_text.addTextChangedListener(new TextWatcher() {
+        // TODO: format the EditText (right now it's like 2 characters wide)
+
+        data.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int before, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int count, int after) {
 
-                // TODO: is there a better way to keep track of this (so we don't call length() every time the text changes)?
-                if (s.length() > 0) {
-
-                    // TODO: figure out how to do the color change automatically - could override this function, but there's probably a button parameter
-                    log_submit_button.setEnabled(true);
-                    log_submit_button.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                if (!hasData && (s.length() > 0)) {
+                    hasData = true;
+                    sendReadyNotification(true);
                 }
-                else {
-                    log_submit_button.setEnabled(false);
-                    log_submit_button.setTextColor(getResources().getColor(R.color.colorPrimary));
+                else if (hasData){
+                    hasData = false;
+                    sendReadyNotification(false);
                 }
             }
 
@@ -74,6 +83,18 @@ public class TS_Text_Widget implements TS_Widget {
     // Returns the Android View object associated with this widget
     public View getAndroidView() {
         return data;
+    }
+
+    private void sendReadyNotification(boolean ready) {
+
+        // TODO: figure out context nonsense
+
+        // Broadcast WIDGET_READY broadcast w/ ready as data
+        Intent i = new Intent(ACTION_WIDGET_READY);
+        i.putExtra("id", this.index);
+        i.putExtra("ready", ready);
+
+        m_context.sendBroadcast(i);
     }
 
 }
