@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.BroadcastReceiver;
+import com.example.emigm.touchstone.TS_Widget;
 
 public class TS_Form {
 
@@ -17,7 +18,7 @@ public class TS_Form {
     private TS_Widget[] Entry_Fields;
     private Context m_context;
 
-    private int Widgets_Ready = 0;
+    private boolean[] Widgets_Ready;
 
     public enum TS_Recurrence_Increment {
 
@@ -40,24 +41,32 @@ public class TS_Form {
         // TEMPORARY: hard code anxiety form list
         Entry_Fields = new TS_Widget[]{new TS_Text_Widget("Words", context)};
 
+        Widgets_Ready = new boolean[Entry_Fields.length];
 
         // Update widgets ready mask
         for(int i = 0; i < Entry_Fields.length; i++) {
 
             if (Entry_Fields[i].isRequired()) {
-                notifyReady(i, false);
+                Widgets_Ready[i] = false;
+            }
+            else {
+                Widgets_Ready[i] = true;
             }
         }
 
-        IntentFilter filter = new IntentFilter("ACTION_WIDGET_READY");
+        IntentFilter filter = new IntentFilter(TS_Widget.ACTION_WIDGET_READY);
         m_context.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                System.out.println("Form got the intent");
                 int id = intent.getIntExtra("id", -1);
                 boolean ready = intent.getBooleanExtra("ready", false);
 
                 if (id >= 0 && id < Entry_Fields.length) {
                     notifyReady(id, ready);
+                }
+                else {
+                    System.out.println("invalid id");
                 }
             }
         }, filter);
@@ -106,29 +115,27 @@ public class TS_Form {
     }
 
     // Callback for broadcast from widgets to notify when they are ready to be submitted.  Returns true if all widgets in form are ready
-    public boolean notifyReady(int id, boolean ready) {
+    public void notifyReady(int id, boolean ready) {
+        boolean form_was_ready = form_ready();
 
-        boolean was_ready = (Widgets_Ready == 0);
+        Widgets_Ready[id] = ready;
 
-        int mask = ~((ready ? 1 : 0) << id);
-
-        // we want to clear this bit
-        if (ready) Widgets_Ready &= mask;
-
-        // we want to set this bit
-        else Widgets_Ready |= mask;
-
-        // all widgets are ready
-        if (Widgets_Ready == 0) {
+        if (form_ready()) {
             sendFormReadyNotification(true);
-            return true;
         }
 
-        else if (was_ready) {
+        else if (form_was_ready) {
             sendFormReadyNotification(false);
         }
+    }
 
-        return false;
+    private boolean form_ready() {
+        for (int i = 0; i < Widgets_Ready.length; i++) {
+            if (!Widgets_Ready[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void delete() {
@@ -155,6 +162,8 @@ public class TS_Form {
     }
 
     private void sendFormReadyNotification(boolean ready) {
+
+        System.out.println(ready ? "form is ready" : "form is not ready");
 
         // Broadcast WIDGET_READY broadcast w/ ready as data
         Intent i = new Intent(ACTION_FORM_READY);

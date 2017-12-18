@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import android.widget.LinearLayout;
 import java.util.Iterator;
 import android.content.IntentFilter;
+import com.example.emigm.touchstone.TS_Form;
 
 public class LogInput extends AppCompatActivity {
 
@@ -40,12 +41,14 @@ public class LogInput extends AppCompatActivity {
             form_content.addView(w.getAndroidView());
         }
 
-        IntentFilter filter = new IntentFilter("ACTION_FORM_READY");
+        IntentFilter filter = new IntentFilter(TS_Form.ACTION_FORM_READY);
         this.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
 
                 boolean ready = intent.getBooleanExtra("ready", false);
+
+                System.out.println(ready ? "enabling submit" : "disabling submit");
 
                 if (ready) {
                     log_submit_button.setEnabled(true);

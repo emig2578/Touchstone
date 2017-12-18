@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.content.Context;
 import android.content.Intent;
 import android.content.BroadcastReceiver;
+import com.example.emigm.touchstone.TS_Form;
 
 public class TS_Text_Widget implements TS_Widget {
 
@@ -15,7 +16,7 @@ public class TS_Text_Widget implements TS_Widget {
 
     private EditText data;
 
-    private boolean hasData;
+    private boolean hasData = false;
 
     private Context m_context;
 
@@ -38,11 +39,9 @@ public class TS_Text_Widget implements TS_Widget {
             public void onTextChanged(CharSequence s, int start, int count, int after) {
 
                 if (!hasData && (s.length() > 0)) {
-                    hasData = true;
                     sendReadyNotification(true);
                 }
-                else if (hasData){
-                    hasData = false;
+                else if (hasData && s.length() < 1){
                     sendReadyNotification(false);
                 }
             }
@@ -87,13 +86,16 @@ public class TS_Text_Widget implements TS_Widget {
 
     private void sendReadyNotification(boolean ready) {
 
-        // TODO: figure out context nonsense
+        System.out.println("sending ready notification: "+ready+" from widget "+this.index);
+
+        hasData = ready;
 
         // Broadcast WIDGET_READY broadcast w/ ready as data
         Intent i = new Intent(ACTION_WIDGET_READY);
         i.putExtra("id", this.index);
         i.putExtra("ready", ready);
 
+        System.out.println("sending broadcast");
         m_context.sendBroadcast(i);
     }
 
