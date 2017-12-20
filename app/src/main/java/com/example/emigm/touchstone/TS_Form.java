@@ -39,7 +39,7 @@ public class TS_Form {
         m_context = context;
 
         // TEMPORARY: hard code anxiety form list
-        Entry_Fields = new TS_Widget[]{new TS_Text_Widget("Words", context)};
+        Entry_Fields = new TS_Widget[]{new TS_Text_Widget("Words", 500, context)};
 
         Widgets_Ready = new boolean[Entry_Fields.length];
 
@@ -58,7 +58,7 @@ public class TS_Form {
         m_context.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                System.out.println("Form got the intent");
+
                 int id = intent.getIntExtra("id", -1);
                 boolean ready = intent.getBooleanExtra("ready", false);
 
@@ -162,8 +162,6 @@ public class TS_Form {
     }
 
     private void sendFormReadyNotification(boolean ready) {
-
-        System.out.println(ready ? "form is ready" : "form is not ready");
 
         // Broadcast WIDGET_READY broadcast w/ ready as data
         Intent i = new Intent(ACTION_FORM_READY);

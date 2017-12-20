@@ -48,8 +48,6 @@ public class LogInput extends AppCompatActivity {
 
                 boolean ready = intent.getBooleanExtra("ready", false);
 
-                System.out.println(ready ? "enabling submit" : "disabling submit");
-
                 if (ready) {
                     log_submit_button.setEnabled(true);
                 }
