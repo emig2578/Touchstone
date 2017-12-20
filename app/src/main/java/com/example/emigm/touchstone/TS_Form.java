@@ -39,17 +39,21 @@ public class TS_Form {
         m_context = context;
 
         // TEMPORARY: hard code anxiety form list
-        Entry_Fields = new TS_Widget[]{new TS_Text_Widget("Words", 500, context)};
+        Entry_Fields = new TS_Widget[]{new TS_Slider_Widget("Level of functioning", context), new TS_Text_Widget("Words", 500, context)};
 
         Widgets_Ready = new boolean[Entry_Fields.length];
 
-        // Update widgets ready mask
+        // Update indexes and widgets ready mask
         for(int i = 0; i < Entry_Fields.length; i++) {
 
+            Entry_Fields[i].setIndex(i);
+
             if (Entry_Fields[i].isRequired()) {
+                System.out.println("Widget "+i+" is required");
                 Widgets_Ready[i] = false;
             }
             else {
+                System.out.println("Widget "+i+" is not required");
                 Widgets_Ready[i] = true;
             }
         }
@@ -118,13 +122,18 @@ public class TS_Form {
     public void notifyReady(int id, boolean ready) {
         boolean form_was_ready = form_ready();
 
+        System.out.println(form_was_ready ? "Form was ready\n" : "Form was not ready\n");
+
+        System.out.println("Widget "+id+" is "+(ready?"":"not ")+"ready\n");
         Widgets_Ready[id] = ready;
 
         if (form_ready()) {
+            System.out.println("Form is ready\n");
             sendFormReadyNotification(true);
         }
 
         else if (form_was_ready) {
+            System.out.println("Form is not ready\n");
             sendFormReadyNotification(false);
         }
     }
@@ -132,7 +141,11 @@ public class TS_Form {
     private boolean form_ready() {
         for (int i = 0; i < Widgets_Ready.length; i++) {
             if (!Widgets_Ready[i]) {
+                System.out.println("Widget "+i+" is not ready");
                 return false;
+            }
+            else {
+                System.out.println("Widget "+i+" is ready");
             }
         }
         return true;

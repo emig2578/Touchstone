@@ -73,7 +73,14 @@ public class TS_Text_Widget implements TS_Widget {
 
     // Packages widget data into TS xml scheme
     public String toEntryData() {
-        return data.getText().toString();
+        // TEMPORARY: hard code until DOM stuff
+
+        String out = "<text \n";
+        out += "\tlabel=\""+label+"\">\n";
+        out += "\t"+data.getText().toString()+"\n";
+        out += "</text>";
+
+        return out;
     }
 
     // Returns label of this widget (blank by default)
@@ -108,6 +115,8 @@ public class TS_Text_Widget implements TS_Widget {
     private void sendReadyNotification(boolean ready) {
 
         hasData = ready;
+
+        System.out.println("I am widget "+this.index+" and I am "+(ready?"":"not ")+"ready");
 
         // Broadcast WIDGET_READY broadcast w/ ready as data
         Intent i = new Intent(ACTION_WIDGET_READY);
