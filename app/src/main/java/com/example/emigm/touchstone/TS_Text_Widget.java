@@ -95,7 +95,6 @@ public class TS_Text_Widget implements TS_Widget {
 
     // Reset widget content to its default state
     public void clearData() {
-        System.out.println("Clear data");
         data.setText("");
     }
 
@@ -115,8 +114,6 @@ public class TS_Text_Widget implements TS_Widget {
     private void sendReadyNotification(boolean ready) {
 
         hasData = ready;
-
-        System.out.println("I am widget "+this.index+" and I am "+(ready?"":"not ")+"ready");
 
         // Broadcast WIDGET_READY broadcast w/ ready as data
         Intent i = new Intent(ACTION_WIDGET_READY);
