@@ -105,7 +105,20 @@ public class TS_Form {
     // Convert the contents of this form to xml
     public String toEntry() {
 
-        return "";
+        // TEMPORARY: hard code until DOM
+
+        String out = "<form\n";
+        out += "\tname=\""+Name+"\"\n";
+        out += "\ttimestamp=\""+12345678+"\"\n";
+        out += "\t>";
+
+        for (int i = 0; i <Entry_Fields.length; i++) {
+            out += Entry_Fields[i].toEntryData();
+        }
+
+        out += "</form>\n";
+
+        return out;
     }
 
     // Reset all data in this form

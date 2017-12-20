@@ -16,10 +16,6 @@ public class TS_Slider_Widget implements TS_Widget {
     private SeekBar data;
     private FrameLayout frame;
 
-    private boolean hasData = false;
-
-    private Context m_context;
-
     public TS_Slider_Widget(String label, Context context) {
         this.label = label;
 
@@ -67,7 +63,6 @@ public class TS_Slider_Widget implements TS_Widget {
     public void setIndex(int index) {
         this.index = index;
     }
-
 
     public int getIndex() {
         return index;

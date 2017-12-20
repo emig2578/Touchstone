@@ -78,7 +78,7 @@ public class TS_Text_Widget implements TS_Widget {
         String out = "<text \n";
         out += "\tlabel=\""+label+"\">\n";
         out += "\t"+data.getText().toString()+"\n";
-        out += "</text>";
+        out += "</text>\n";
 
         return out;
     }
